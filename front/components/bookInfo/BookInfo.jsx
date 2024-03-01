@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 export const BookInfo = ({ navigation, route }) => {
 	const { id } = route.params;
-
+	console.log(id, "Linea 7");
 	const deleteBooks = async (id) => {
 		try {
 			const res = await axios.delete(`http://localhost:3000/books/${id}`);
@@ -25,7 +25,7 @@ export const BookInfo = ({ navigation, route }) => {
 			}
 		};
 		getBook();
-	}, []);
+	}, [id]);
 
 	return (
 		<View style={styles.book}>

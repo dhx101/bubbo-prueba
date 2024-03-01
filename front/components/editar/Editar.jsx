@@ -7,21 +7,21 @@ export const Editar = ({ navigation, route }) => {
 	console.log(id);
 
 	const [libro, setLibro] = useState(null);
-
+	const getBook = async () => {
+		try {
+			const res = await axios.get(`http://localhost:3000/books/${id}`);
+			console.log(res.data[0]);
+			setLibro(res.data[0]);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	useEffect(() => {
-		const getBook = async () => {
-			try {
-				const res = await axios.get(`http://localhost:3000/books/${id}`);
-				console.log(res.data[0]);
-				setLibro(res.data[0]);
-			} catch (error) {
-				console.log(error);
-			}
-		};
 		getBook(id);
+		console.log(libro, "log");
 	}, []);
 
-	const [name, setName] = useState(libro?.name);
+	const [name, setName] = useState();
 	const [author, setAuthor] = useState(libro?.author);
 	const [pages, setPages] = useState(libro?.pages);
 	const [newBook, setNewBook] = useState();
@@ -61,17 +61,24 @@ export const Editar = ({ navigation, route }) => {
 			<View>
 				<Pressable
 					onPress={() => {
-						 {
-							const myNewBook = {
-								name: name,
-								author: author,
-								pages: pages,
-							};
-							setNewBook(myNewBook);
-							addBook(id, myNewBook);
-							console.log(myNewBook, "Libro en la base de datos");
-							navigation.navigate("Home")
+						if (!name) {
+							setName(libro?.name);
 						}
+						if (!author) {
+							setAuthor(libro?.author);
+						}
+						if (!pages) {
+							setPages(libro?.page);
+						}
+						const myNewBook = {
+							name: name,
+							author: author,
+							pages: pages,
+						};
+						setNewBook(myNewBook);
+						addBook(id, myNewBook);
+						console.log(myNewBook, "Libro en la base de datos");
+						navigation.navigate("Home");
 					}}>
 					<Text>Enviar</Text>
 				</Pressable>

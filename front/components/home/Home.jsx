@@ -3,9 +3,9 @@ import { Text, View, Pressable, Button, StyleSheet } from "react-native";
 import { Book } from "../book/Book";
 import axios from "axios";
 
-export const Home = ({ navigation }) => {
+export const Home = ({ navigation, route }) => {
 	const [libros, setLibros] = useState(null);
-	
+	const change  = route.params
 	const getBooks = async () => {
 		console.log(`http://localhost:3000/`);
 		try {
@@ -19,11 +19,11 @@ export const Home = ({ navigation }) => {
 
 	useEffect(() => {
 		getBooks();
-	},[]);
+	},[change]);
 
 	return (
 		<>
-			<View>
+			<View style={styles.main}>
 				<Pressable
 					style={styles.buttonAdd}
 					onPress={() => navigation.navigate("NewBook")}>
@@ -72,4 +72,8 @@ const styles = StyleSheet.create({
 		paddingVertical: "8px",
 		paddingHorizontal: "20px",
 	},
+	main: {
+		display: "flex",
+		gap: "25px"
+	}
 });

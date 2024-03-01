@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
 export const NewBook = () => {
 	const [name, setName] = useState("");
@@ -19,7 +19,7 @@ export const NewBook = () => {
 		}
 	};
 	return (
-		<View>
+		<View style={styles.block}>
 			<Text>Agrega tu nuevo libro</Text>
 			<TextInput
 				placeholder="Nombre del libro"
@@ -62,3 +62,10 @@ export const NewBook = () => {
 		</View>
 	);
 };
+
+const styles = StyleSheet.create({
+	block: {
+		display: "flex",
+		gap: "10px",
+	},
+});
