@@ -53,6 +53,7 @@ export const NewBook = () => {
 							setNewBook(myNewBook);
 							addBook(myNewBook);
 							console.log(myNewBook, "Libro en la base de datos");
+							navigation.navigate("Home")
 						}
 					}}>
 					<Text>Enviar</Text>

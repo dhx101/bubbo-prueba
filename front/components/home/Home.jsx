@@ -5,6 +5,7 @@ import axios from "axios";
 
 export const Home = ({ navigation }) => {
 	const [libros, setLibros] = useState(null);
+	
 	const getBooks = async () => {
 		console.log(`http://localhost:3000/`);
 		try {
@@ -15,9 +16,10 @@ export const Home = ({ navigation }) => {
 			console.log(error);
 		}
 	};
+
 	useEffect(() => {
 		getBooks();
-	}, []);
+	},[]);
 
 	return (
 		<>
@@ -43,11 +45,6 @@ export const Home = ({ navigation }) => {
 						</Pressable>
 					</View>
 				))}
-				<Pressable
-					style={styles.button}
-					onPress={() => navigation.navigate("EditBook")}>
-					<Text>editar</Text>
-				</Pressable>
 			</View>
 		</>
 	);

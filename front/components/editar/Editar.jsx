@@ -7,9 +7,7 @@ export const Editar = ({ navigation, route }) => {
 	console.log(id);
 
 	const [libro, setLibro] = useState(null);
-	const [name, setName] = useState("");
-	const [author, setAuthor] = useState("");
-	const [pages, setPages] = useState("");
+
 	useEffect(() => {
 		const getBook = async () => {
 			try {
@@ -21,13 +19,17 @@ export const Editar = ({ navigation, route }) => {
 			}
 		};
 		getBook(id);
-	}, [id]);
+	}, []);
 
-	const [newBook, setNewBook] = useState("");
+	const [name, setName] = useState(libro?.name);
+	const [author, setAuthor] = useState(libro?.author);
+	const [pages, setPages] = useState(libro?.pages);
+	const [newBook, setNewBook] = useState();
+
 	const addBook = async (id, data) => {
 		try {
-			await axios.post(`http://localhost:3000/books/${id}`, data);
-			console.log(`Nuevo libro añadido`);
+			await axios.put(`http://localhost:3000/books/${id}`, data);
+			console.log(`Libro con id ${id} ha sido modificiado`);
 		} catch (error) {
 			console.log(error);
 		}
@@ -40,36 +42,35 @@ export const Editar = ({ navigation, route }) => {
 				onChangeText={(text) => {
 					setName(text);
 				}}
-                defaultValue={libro?.name}
+				defaultValue={libro?.name}
 			/>
 			<TextInput
 				placeholder="Autor del libro"
 				onChangeText={(text) => {
 					setAuthor(text);
 				}}
-                defaultValue={libro?.author}
+				defaultValue={libro?.author}
 			/>
 			<TextInput
 				placeholder="Páginas del libro"
 				onChangeText={(text) => {
 					setPages(text);
 				}}
-                defaultValue={libro?.pages}
+				defaultValue={libro?.pages}
 			/>
 			<View>
 				<Pressable
 					onPress={() => {
-						if (!name || !author || !pages) {
-							console.log("need all data to work");
-						} else {
+						 {
 							const myNewBook = {
 								name: name,
 								author: author,
 								pages: pages,
 							};
 							setNewBook(myNewBook);
-							addBook(myNewBook);
+							addBook(id, myNewBook);
 							console.log(myNewBook, "Libro en la base de datos");
+							navigation.navigate("Home")
 						}
 					}}>
 					<Text>Enviar</Text>
