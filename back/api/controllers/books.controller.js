@@ -12,13 +12,14 @@ initializeApp({
 const db = getFirestore();
 const getBooks = async (req, res) => {
 	const booksRef = db.collection("books");
-	// console.log("Obteniendo libros");
+	console.log("Obteniendo libros");
 	try {
 		const snapshot = await booksRef.get();
 		const books = [];
 		snapshot.forEach((doc) => {
 			books.push({ id: doc.id, ...doc.data() });
 		});
+		console.log(books);
 		return res.status(200).json(books);
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
@@ -75,6 +76,7 @@ const updateBook = async (req, res) => {
 };
 
 const deleteBook = async (req, res) => {
+	console.log("Borrando libro");
 	console.log(req.params.id);
 	try {
 		await db.collection("books").doc(req.params.id).delete();
